@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+    <h2>Productos</h2>
+    {% for prod in productos %}
+    <div class="col-md-4">
+        <div class="card">
+          <img src="{{ prod.foto.url }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ prod.nombre }}</h5>
+            <p class="card-text">{{ prod.descripcion }}</p>
+            <p class="card-price">${{ prod.precio }}</p>
+            
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

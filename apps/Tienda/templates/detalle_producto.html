@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="card">
+    <img src="{{ producto.foto.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+    <div class="card-body">
+      <h5 class="card-title">{{ producto.nombre }}</h5>
+      <p class="card-text">{{ producto.descripcion }}</p>
+      <p class="card-price">${{ producto.precio }}</p>
+      <a href="{% url 'agregar_carrito' producto.id %}" class="btn btn-success">Agregar al Carrito</a>
+    </div>
+  </div>
+{% endblock %}

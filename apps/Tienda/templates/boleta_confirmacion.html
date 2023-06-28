@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Confirmación de Compra</h1>
+  <p>¡Gracias por tu compra!</p>
+  <p>Tu boleta ha sido generada correctamente.</p>
+  <p>Detalles de la boleta:</p>
+  <ul>
+    <li>ID: {{ boleta.id }}</li>
+    <li>Cliente: {{ boleta.id_cliente.nombres }}</li>
+    <li>Total: ${{ boleta.total }}</li>
+    <li>Fecha de Creación: {{ boleta.fecha_de_creacion }}</li>
+  </ul>
+{% endblock %}
