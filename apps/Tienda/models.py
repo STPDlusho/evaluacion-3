@@ -17,10 +17,12 @@ class Usuario(models.Model):
     password = models.CharField(max_length=100)
     nombres = models.CharField(max_length=100)
 
+
 class Cliente(models.Model):
     correo = models.EmailField()
     password = models.CharField(max_length=100)
     nombres = models.CharField(max_length=100)
+
 
 class Boleta(models.Model):
     id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)

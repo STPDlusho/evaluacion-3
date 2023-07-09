@@ -1,35 +1,59 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<header>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Supermercado</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="inicio">inicio</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="listaProductos">productos</a>
+              </li>
+          </ul>
+      </div>
+  </nav>
+</header>
+{% endblock %}
 
 {% block content %}
-  <h1>Carrito de Compras</h1>
-  {% if productos_carrito %}
-    <table class="table">
-      <thead>
+<h1>Carrito de Compras</h1>
+
+<table class="table">
+    <thead>
         <tr>
-          <th>Producto</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          <th>Total</th>
-          <th></th>
+            <th>Producto</th>
+            <th>Precio unitario</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
         </tr>
-      </thead>
-      <tbody>
-        {% for item in productos_carrito %}
-          <tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
             <td>{{ item.producto.nombre }}</td>
             <td>${{ item.producto.precio }}</td>
             <td>{{ item.cantidad }}</td>
-            <td>${{ item.total }}</td>
-            <td>
-              <a href="{% url 'eliminar_producto_carrito' item.id %}" class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
-          </tr>
+            <td>${{ item.producto.precio * item.cantidad }}</td>
+        </tr>
         {% endfor %}
-      </tbody>
-    </table>
-    <p>Total: ${{ total_carrito }}</p>
-    <a href="{% url 'finalizar_compra' %}" class="btn btn-primary">Finalizar Compra</a>
-  {% else %}
-    <p>No hay productos en el carrito.</p>
-  {% endif %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Total:</td>
+            <td>${{ total }}</td>
+        </tr>
+    </tfoot>
+</table>
+
+<a href="{% url 'checkout' %}" class="btn btn-primary">Ir a Pagar</a>
 {% endblock %}

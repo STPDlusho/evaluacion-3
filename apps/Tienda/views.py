@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import * 
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+
 
 # Create your views here.
 def cargarInicio(request):
@@ -129,6 +132,59 @@ def finalizar_compra(request):
 
     return redirect('boleta_confirmacion')
 
+def register_view(request):
+    if request.method == 'POST':
+        # Obtén los datos del formulario
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        # Verifica si las contraseñas coinciden
+        if password1 != password2:
+            error_message = 'Las contraseñas no coinciden.'
+            return render(request, 'register.html', {'error_message': error_message})
+
+        # Verifica si el nombre de usuario ya está en uso
+        if User.objects.filter(username=username).exists():
+            error_message = 'El nombre de usuario ya está en uso.'
+            return render(request, 'register.html', {'error_message': error_message})
+
+        # Crea el usuario
+        user = User.objects.create_user(username=username, password=password1, email=email)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+
+        # Inicia sesión automáticamente después de crear la cuenta
+        login(request, user)
+
+        # Redirige al usuario a la página principal
+        return redirect('inicio')
+
+    return render(request, 'registration/register.html')
+
+
+def login_view(request):
+    if request.method == 'POST':
+        # Obtén los datos del formulario
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # Autentica al usuario
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            # Inicia sesión si el usuario es autenticado correctamente
+            login(request, user)
+            return redirect('inicio')
+        else:
+            error_message = 'Nombre de usuario o contraseña incorrectos.'
+            return render(request, 'login.html', {'error_message': error_message})
+
+    return render(request, 'registration/login.html')
 
 
 
