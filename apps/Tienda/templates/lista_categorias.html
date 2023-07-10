@@ -2,14 +2,41 @@
 {% load static %}
 
 {% block head %}
-
+  <title>Listado de Categorías de Productos</title>
+  <!-- Incluir los estilos de Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css">
 {% endblock %}
 
 {% block content %}
-  <h1>Categorias</h1>
-  
-    
-  
+    <div class="container">
+        <h1>Listado de Categorías de Productos</h1>
+        <ul class="list-group" id="category-list">
+            <!-- Las categorías se cargarán dinámicamente aquí -->
+        </ul>
+    </div>
+
+    <!-- Incluir el script de Bootstrap y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Datos de ejemplo de categorías
+            var categories = [
+                'Electrónica',
+                'Ropa',
+                'Alimentos',
+                'Hogar',
+                'Deportes'
+            ];
+
+            // Iterar sobre las categorías y agregar elementos a la lista
+            for (var i = 0; i < categories.length; i++) {
+                var category = categories[i];
+                var listItem = '<li class="list-group-item">' + category + '</li>';
+                $('#category-list').append(listItem);
+            }
+        });
+    </script> 
 {% endblock %}
 
 {% block script %}
